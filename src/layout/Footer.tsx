@@ -22,7 +22,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16 mb-16 md:mb-20">
           <div className="md:col-span-2">
             <div className="flex items-center mb-6 md:mb-8 h-16">
-              <img src={logoWhite} alt="4SIX CREATIVE" className="h-full object-contain" />
+              <img src={logoWhite} alt="4SIX CREATIVE" className="h-full object-contain" loading="lazy" decoding="async" width={400} height={134} />
             </div>
             <p className="text-white/80 text-lg md:text-xl max-w-md mb-8 md:mb-10 leading-relaxed">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim.

@@ -168,6 +168,10 @@ function HomePage() {
               src={logoBlack}
               alt="4SIX CREATIVE"
               className="w-[80%] max-w-2xl object-contain"
+              fetchPriority="high"
+              decoding="async"
+              width={400}
+              height={134}
             />
           </motion.div>
         )}

@@ -114,6 +114,10 @@ export function VideoShowcaseSection({ reels }: VideoShowcaseSectionProps) {
                     src={iPhoneFrame}
                     alt="iPhone Frame"
                     className="absolute inset-0 w-full h-full object-cover pointer-events-none z-10"
+                    loading="lazy"
+                    decoding="async"
+                    width={600}
+                    height={1228}
                   />
                 </div>
               </CarouselItem>
@@ -229,6 +233,10 @@ export function VideoShowcaseSection({ reels }: VideoShowcaseSectionProps) {
                     src={src}
                     alt={`BTS shot ${idx + 1}`}
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out"
+                    loading="lazy"
+                    decoding="async"
+                    width={800}
+                    height={800}
                   />
                   {/* Hover reveal overlay */}
                   <div className="absolute inset-0 bg-brand-dark/0 group-hover:bg-brand-dark/55 transition-colors duration-300 flex items-end justify-start p-3">

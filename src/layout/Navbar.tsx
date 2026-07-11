@@ -27,7 +27,7 @@ export default function Navbar({ onContactClick }: { onContactClick?: () => void
           className="flex items-center cursor-pointer h-12"
         >
           <Link to="/">
-            <img src={logoBlack} alt="4SIX CREATIVE" className="h-12 object-contain" />
+            <img src={logoBlack} alt="4SIX CREATIVE" className="h-12 object-contain" fetchPriority="high" decoding="async" width={400} height={134} />
           </Link>
         </motion.div>
 

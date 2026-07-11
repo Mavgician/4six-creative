@@ -185,6 +185,10 @@ export default function PortfolioDetailPage() {
                         src={iPhoneFrame}
                         alt="iPhone Frame"
                         className="absolute inset-0 w-full h-full object-cover pointer-events-none z-10"
+                        loading="lazy"
+                        decoding="async"
+                        width={600}
+                        height={1228}
                       />
                     </motion.div>
                   ))}

@@ -20,7 +20,10 @@ export function CEOSection() {
                 src={meetTroyia}
                 alt="Meet Troyia"
                 className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
+                loading="lazy"
+                decoding="async"
+                width={800}
+                height={1067}
               />
             </div>
           </div>
