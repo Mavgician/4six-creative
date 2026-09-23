@@ -38,19 +38,23 @@ export default function Navbar({ onContactClick }: { onContactClick?: () => void
               <Link
                 key={item.label}
                 to={item.href}
-                className="hover:text-brand-orange transition-colors relative group data-[active=true]:text-brand-orange"
+                className={`hover:text-brand-orange transition-colors relative group ${item.href == location.pathname ? 'text-brand-orange' : ''}`}
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-orange transition-all group-hover:w-full data-[active=true]:w-full" />
+                <span
+                  className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-orange transition-all group-hover:w-full ${item.href == location.pathname ? 'w-full' : ''}`}
+                />
               </Link>
             ) : (
               <a
                 key={item.label}
-                href={item.href}
-                className="hover:text-brand-orange transition-colors relative group data-[active=true]:text-brand-orange"
+                to={item.href}
+                className={`hover:text-brand-orange transition-colors relative group ${item.href == location.pathname ? 'text-brand-orange' : ''}`}
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-orange transition-all group-hover:w-full data-[active=true]:w-full" />
+                <span
+                  className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-orange transition-all group-hover:w-full ${item.href == location.pathname ? 'w-full' : ''}`}
+                />
               </a>
             )
           )}
