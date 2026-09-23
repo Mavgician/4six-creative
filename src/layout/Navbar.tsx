@@ -48,7 +48,7 @@ export default function Navbar({ onContactClick }: { onContactClick?: () => void
             ) : (
               <a
                 key={item.label}
-                to={item.href}
+                href={item.href}
                 className={`hover:text-brand-orange transition-colors relative group ${item.href == location.pathname ? 'text-brand-orange' : ''}`}
               >
                 {item.label}
