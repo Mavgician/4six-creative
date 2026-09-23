@@ -6,6 +6,19 @@ import { Button } from '@/components/ui/button';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+interface Feature {
+  description: string;
+  price: string;
+}
+
+interface Plan {
+  name: string;
+  description: string;
+  features: Feature[];
+  color: string;
+  featured?: boolean;
+}
+
 const services = [
   {
     icon: Globe,
@@ -53,25 +66,80 @@ const services = [
 
 const plans = [
   {
-    name: 'Starter',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.',
-    features: ['Lorem ipsum dolor s', 'Lorem ipsum dolo', 'Lorem ipsum do', 'Lorem ipsum do', 'Lorem ipsum d'],
+    name: 'Freebie',
+    description: 'Lead magnets like checklists, mini guides, templates, or short trainings.',
+    features: [
+      { description: 'The Consistency Cure Ebook', price: '$0' },
+    ],
     color: 'bg-brand-lavender',
   },
   {
-    name: 'Growth',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.',
-    features: ['Lorem ipsum dolor s', 'Lorem ipsum dolor sit', 'Lorem ipsum do', 'Lorem ipsum dolor si', 'Lorem ipsum dolor sit am', 'Lorem ipsum dolo'],
+    name: 'Low Ticket',
+    description: 'Tripwires, mini courses, templates, ebooks, and small digital products.',
+    features: [
+      { description: 'Camera Confidence Training', price: '$17' },
+      { description: 'Social School Community (Monthly)', price: '$47/mo' },
+      { description: 'Social School Community (Annual)', price: '$397/yr' },
+      { description: 'SS Lifetime Access (Launch Week)', price: '$327' },
+    ],
     color: 'bg-brand-orange',
+  },
+  {
+    name: 'Mid Ticket',
+    description: 'Signature courses, group programs, challenges, and short-term coaching containers.',
+    features: [
+      { description: 'DIY Social Media Management', price: '$197' },
+      { description: '4-Hour VIP Content Day', price: '$997' },
+    ],
+    color: 'bg-brand-green',
     featured: true,
   },
   {
+    name: 'High Ticket',
+    description: 'Masterminds, 1:1 coaching, done-for-you services, certifications, and intensive group programs.',
+    features: [
+      { description: 'Social Media Management', price: 'From $2,500/mo' },
+      { description: 'On-Site Content Day', price: 'From $1,997' },
+      { description: 'Business / Brand Content Day', price: 'Included' },
+      { description: 'Event Coverage Content Day', price: 'Included' },
+      { description: 'BTS Content Day', price: 'Included' },
+    ],
+    color: 'bg-brand-blue',
+  },
+  {
     name: 'Premium',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing e.',
-    features: ['Lorem ipsum dolor sit', 'Lorem ipsum dolor sit amet', 'Lorem ipsum d', 'Lorem ipsum dolor sit a', 'Lorem ipsum dolor sit', 'Lorem ipsum dolor sit ame'],
-    color: 'bg-brand-green',
+    description: 'VIP days, year-long masterminds, retainer agency work, high-level consulting.',
+    features: [
+      { description: 'TBD', price: 'TBD' },
+    ],
+    color: 'bg-brand-gold',
   },
 ];
+
+function getStartingPrice(features: Feature[]): string {
+  const parsed = features
+    .map((f) => {
+      const match = f.price.match(/[\d,]+(\.\d+)?/);
+      if (!match) return null; // catches 'Included', 'TBD'
+      return {
+        value: parseFloat(match[0].replace(/,/g, '')),
+        raw: f.price,
+      };
+    })
+    .filter((p): p is { value: number; raw: string } => p !== null);
+
+  if (parsed.length === 0) return 'TBD';
+
+  const lowest = parsed.reduce((min, curr) => (curr.value < min.value ? curr : min));
+  
+  const regex = new RegExp('/From/i')
+
+  const hasFrom = regex.test(lowest.raw);
+
+  console.log(hasFrom);
+
+  return lowest.value === 0 ? 'Free' : `Starting at $${lowest.value}`;
+}
 
 export default function ServicesPage() {
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -143,17 +211,17 @@ export default function ServicesPage() {
 
       {/* Pricing */}
       <section className='py-24 bg-brand-light px-6 grid-bg'>
-        <div className='max-w-7xl mx-auto relative z-10'>
+        <div className='mx-auto relative z-10'>
           <div className='text-center mb-16'>
             <h2 className='text-[clamp(2.5rem,6vw,5rem)] font-display font-black uppercase tracking-tighter text-brand-dark leading-none mb-4'>
               Simple <span className='text-brand-orange italic'>Pricing</span>
             </h2>
             <p className='text-xl text-brand-dark/60 max-w-xl mx-auto'>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolo.
+              Pick your entry point. Every tier is built to grow with you.
             </p>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch'>
+          <div className='grid grid-cols-1 md:grid-cols-5 gap-6 items-stretch'>
             {plans.map((plan, idx) => (
               <motion.div
                 key={idx}
@@ -161,15 +229,15 @@ export default function ServicesPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ amount: 0.2 }}
                 transition={{ delay: idx * 0.15 }}
-                className={`rounded-3xl p-8 flex flex-col gap-6 creative-border ${plan.featured ? 'bg-brand-dark text-white -mt-4' : 'bg-white text-brand-dark'}`}
+                className={`relative rounded-3xl p-8 flex flex-col gap-6 creative-border ${plan.featured ? 'bg-brand-dark text-white md:-translate-y-6' : 'bg-white text-brand-dark'}`}
               >
                 {plan.featured && (
-                  <div className='inline-block bg-brand-orange text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest w-fit'>
+                  <div className='absolute top-11 right-10 inline-block bg-brand-orange text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest w-fit'>
                     Most Popular
                   </div>
                 )}
                 <div className={`w-12 h-12 rounded-2xl ${plan.color} creative-border-sm`} />
-                <div>
+                <div className={'h-35'}>
                   <h3 className='text-3xl font-display font-black uppercase tracking-tight mb-2'>
                     {plan.name}
                   </h3>
@@ -177,22 +245,24 @@ export default function ServicesPage() {
                     {plan.description}
                   </p>
                 </div>
-                <div className='text-2xl font-display font-black text-brand-orange'>
-                  Contact for pricing
+                <div className='text-xl font-display font-black text-brand-orange'>
+                  {getStartingPrice(plan.features)}
                 </div>
                 <ul className='flex flex-col gap-3'>
                   {plan.features.map((f, i) => (
                     <li key={i} className={`flex items-center gap-3 text-sm font-medium ${plan.featured ? 'text-white/80' : 'text-brand-dark/80'}`}>
                       <div className={`w-5 h-5 rounded-full ${plan.color} creative-border-sm shrink-0`} />
-                      {f}
+                      {f.description}
                     </li>
                   ))}
                 </ul>
-                <Link to='/contact#work-with-us'>
-                  <Button className={`w-full rounded-full py-6 font-bold uppercase tracking-widest creative-border-sm creative-border-hover ${plan.featured ? 'bg-brand-orange text-white hover:bg-brand-lavender' : 'bg-brand-dark text-white hover:bg-brand-orange'}`}>
-                    Get Started
-                  </Button>
-                </Link>
+                <div className='py-5'>
+                  <Link className={`absolute bottom-5 left-0 w-full px-10`} to='/contact#work-with-us'>
+                    <Button className={`relative w-full rounded-full py-6 font-bold uppercase tracking-widest creative-border-sm creative-border-hover ${plan.featured ? 'bg-brand-orange text-white hover:bg-brand-lavender' : 'bg-brand-dark text-white hover:bg-brand-orange'}`}>
+                      Get Started
+                    </Button>
+                  </Link>
+                </div>
               </motion.div>
             ))}
           </div>
